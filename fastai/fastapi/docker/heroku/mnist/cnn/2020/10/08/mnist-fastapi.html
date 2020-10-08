@@ -80,7 +80,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      15 min read
+      19 min read
     
 </span></p>
 
@@ -144,6 +144,28 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Getting-our-data">Getting our data </a></li>
 <li class="toc-entry toc-h2"><a href="#Creating-our-DataBlock">Creating our DataBlock </a></li>
 <li class="toc-entry toc-h2"><a href="#Training-our-model">Training our model </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Making-our-API">Making our API </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#File-structure">File structure </a></li>
+<li class="toc-entry toc-h2"><a href="#Starter-code">Starter code </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#main.py">main.py </a></li>
+<li class="toc-entry toc-h3"><a href="#templates/index.html">templates/index.html </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Loading-our-model">Loading our model </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#main.py">main.py </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#def-load_posix_learner(path)">def load_posix_learner(path) </a></li>
+<li class="toc-entry toc-h4"><a href="#def-setup_learner()">def setup_learner() </a></li>
+<li class="toc-entry toc-h4"><a href="#async-def-startup_event()">async def startup_event() </a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul><!--
@@ -725,7 +747,14 @@ Now that we have our <code>DataBlock</code> ready, to get our <code>DataLoaders<
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>This method of using a pretrained model is called <strong>Transfer Learning</strong>, and I would recommend reading about it once you have a good understanding of CNNs.
 </div>
-Fastai makes transfer learning with well-known models like Resnets, super easy with their <code>cnn_learner</code> function, which returns a Learner object. To know more about this, feel free to refer the <a href="https://docs.fast.ai">docs</a>. Basically, a Learner object contains the model, along with features such as plotting losses, printing accuracies as we train, etc. So now, we'll define our <code>cnn_learner</code>.
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Fastai makes transfer learning with well-known models like Resnets, super easy with their <code>cnn_learner</code> function, which returns a Learner object. To know more about this, feel free to refer the <a href="https://docs.fast.ai">docs</a>. Basically, a Learner object contains the model, along with features such as plotting losses, printing accuracies as we train, etc. So now, we'll define our <code>cnn_learner</code>.</p>
 
 </div>
 </div>
@@ -972,6 +1001,267 @@ Fastai makes transfer learning with well-known models like Resnets, super easy w
 <p>With that, we just saw how we go about loading our data, creating <code>DataBlocks</code>, <code>DataLoaders</code> and <code>Datasets</code>, loading our model, pretraining it, and then finally exporting it!</p>
 <p>To learn more about this whole process, do check out the <a href="https://course.fast.ai">fastai course</a>!</p>
 <p>Now we can move on to creating our API with FastAPI!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Making-our-API">
+<a class="anchor" href="#Making-our-API" aria-hidden="true"><span class="octicon octicon-link"></span></a>Making our API<a class="anchor-link" href="#Making-our-API"> </a>
+</h1>
+<p>Before we get started with out API, I would like to tell the readers that this is a very simple application using FastAPI, and there are <strong>many more</strong> cool features to it which you can check out in their <a href="https://fastapi.tiangolo.com/">docs</a>
+</p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>All code following this point, should be done in a text editor, and not a notebook.
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="File-structure">
+<a class="anchor" href="#File-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>File structure<a class="anchor-link" href="#File-structure"> </a>
+</h2>
+<p>First we create a main directory, which we'll call <code>mnist-fastapi</code>. Hence your directory should look something like:</p>
+
+<pre><code>- mnist-fastapi
+    - static
+        - styles.css
+    - templates
+        - index.html
+    - main.py
+    - mnist_resnet18.pkl</code></pre>
+<p>We'll be adding more files to it whenever required, but for now this will do the job.</p>
+<h2 id="Starter-code">
+<a class="anchor" href="#Starter-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Starter code<a class="anchor-link" href="#Starter-code"> </a>
+</h2>
+<h3 id="main.py">
+<a class="anchor" href="#main.py" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>main.py</code><a class="anchor-link" href="#main.py"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Importing Libraries</span>
+<span class="kn">import</span> <span class="nn">uvicorn</span>
+
+<span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Request</span><span class="p">,</span> <span class="n">File</span><span class="p">,</span> <span class="n">Body</span>
+<span class="kn">from</span> <span class="nn">fastapi.responses</span> <span class="kn">import</span> <span class="n">HTMLResponse</span>
+<span class="kn">from</span> <span class="nn">fastapi.staticfiles</span> <span class="kn">import</span> <span class="n">StaticFiles</span>
+<span class="kn">from</span> <span class="nn">fastapi.templating</span> <span class="kn">import</span> <span class="n">Jinja2Templates</span>
+<span class="kn">from</span> <span class="nn">fastapi.middleware.cors</span> <span class="kn">import</span> <span class="n">CORSMiddleware</span>
+
+<span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+
+<span class="c1"># Initialising app and templating engine</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+<span class="n">templates</span> <span class="o">=</span> <span class="n">Jinja2Templates</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="s2">"templates"</span><span class="p">)</span>
+
+<span class="c1"># Adding static files to serve</span>
+<span class="n">app</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">"/static"</span><span class="p">,</span> <span class="n">StaticFiles</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="s2">"static"</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"static"</span><span class="p">)</span>
+
+<span class="c1"># Declaring base path</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="c1"># For working on Windows systems</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s1">'C:</span><span class="se">\\</span><span class="s1">Users</span><span class="se">\\</span><span class="s1">sayank</span><span class="se">\\</span><span class="s1">workspace</span><span class="se">\\</span><span class="s1">mnist-fastapi</span><span class="se">\\</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="n">model_name</span> <span class="o">=</span> <span class="s1">'mnist_resnet18.pkl'</span>
+
+<span class="c1"># Configuring CORS</span>
+<span class="n">origins</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"*"</span>
+<span class="p">]</span>
+<span class="n">app</span><span class="o">.</span><span class="n">add_middleware</span><span class="p">(</span>
+    <span class="n">CORSMiddleware</span><span class="p">,</span>
+    <span class="n">allow_origins</span><span class="o">=</span><span class="n">origins</span><span class="p">,</span>
+    <span class="n">allow_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">allow_methods</span><span class="o">=</span><span class="p">[</span><span class="s2">"*"</span><span class="p">],</span>
+    <span class="n">allow_headers</span><span class="o">=</span><span class="p">[</span><span class="s2">"*"</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="c1"># Defining root route</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/"</span><span class="p">,</span> <span class="n">response_class</span><span class="o">=</span><span class="n">HTMLResponse</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">read_item</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">templates</span><span class="o">.</span><span class="n">TemplateResponse</span><span class="p">(</span><span class="s2">"index.html"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"request"</span><span class="p">:</span> <span class="n">request</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="templates/index.html">
+<a class="anchor" href="#templates/index.html" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>templates/index.html</code><a class="anchor-link" href="#templates/index.html"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">&lt;!</span>DOCTYPE html&gt;
+<span class="o">&lt;</span><span class="n">html</span> <span class="n">lang</span><span class="o">=</span><span class="s2">"en"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">meta</span> <span class="n">charset</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="o">=</span><span class="s2">"viewport"</span> <span class="n">content</span><span class="o">=</span><span class="s2">"width=device-width, initial-scale=1.0"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">MNIST</span> <span class="n">FastAPI</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Hello</span> <span class="n">World</span><span class="o">!</span>&lt;/h1&gt;
+<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For our <code>main.py</code> file, the only part I believe which falls into the scope of this tutorial is where we define the root route. Every other part is covered in the <a href="https://fastapi.tiangolo.com/">FastAPI docs</a>.</p>
+<p>Firstly, <code>@app.get("/", response_class=HTMLResponse)</code> is a <strong>decorator</strong>. A decorator takes the function below it and does something with it. In this case, it tells FastAPI that the function right below is in charge of handling requests that go to:</p>
+<ul>
+<li>the path <code>/</code>
+</li>
+<li>using a <code>GET</code> operation</li>
+</ul>
+<p>Similarly, you can write decorators for other HTTP methods such as <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, etc.</p>
+<p>The <code>response_class</code> parameter tells the function that it has to return an HTML file, which in this case is sent using <code>templates.TemplateResponse("index.html", {"request": request})</code>
+</p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>It is necessary to pass the <code>request</code> parameter to the function, and then return it with the <code>TemplateResponse</code>.
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Loading-our-model">
+<a class="anchor" href="#Loading-our-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loading our model<a class="anchor-link" href="#Loading-our-model"> </a>
+</h2>
+<h3 id="main.py">
+<a class="anchor" href="#main.py" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>main.py</code><a class="anchor-link" href="#main.py"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+<span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+<span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+<span class="k">def</span> <span class="nf">load_posix_learner</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">save</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PosixPath</span>
+    <span class="n">pathlib</span><span class="o">.</span><span class="n">PosixPath</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">WindowsPath</span>
+    
+    <span class="n">learn</span> <span class="o">=</span> <span class="n">load_learner</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    
+    <span class="n">pathlib</span><span class="o">.</span><span class="n">PosixPath</span> <span class="o">=</span> <span class="n">save</span>
+    <span class="k">return</span> <span class="n">learn</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">setup_learner</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">learn</span> <span class="o">=</span> <span class="n">load_learner</span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="n">model_name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">learn</span> <span class="o">=</span> <span class="n">load_posix_learner</span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="n">model_name</span><span class="p">)</span>
+        <span class="n">learn</span><span class="o">.</span><span class="n">dls</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s1">'cpu'</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Loaded model"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">learn</span>
+    <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="s1">'CPU-only machine'</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">This model was trained with an old version of fastai and will not work in a CPU environment.</span><span class="se">\n\n</span><span class="s2">Please update the fastai library in your training environment and export your model again.</span><span class="se">\n\n</span><span class="s2">See instructions for 'Returning to work' at https://course.fast.ai."</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span>
+
+<span class="n">learn</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">on_event</span><span class="p">(</span><span class="s2">"startup"</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">startup_event</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">learn</span>
+    <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">setup_learner</span><span class="p">())]</span>  <span class="c1"># assign some task</span>
+    <span class="n">learn</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># get tasks</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I'll explain the three functions defined above separately.</p>
+<h4 id="def-load_posix_learner(path)">
+<a class="anchor" href="#def-load_posix_learner(path)" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>def load_posix_learner(path)</code><a class="anchor-link" href="#def-load_posix_learner(path)"> </a>
+</h4>
+<p>This function is necessary <strong>only</strong> if you're working on a Windows system because the fastai function, <code>load_learner</code> uses takes input a <code>PosixPath</code> which is not functional in Windows system and hence this is a workaround I found in the amazing fastai forums!</p>
+<h4 id="def-setup_learner()">
+<a class="anchor" href="#def-setup_learner()" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>def setup_learner()</code><a class="anchor-link" href="#def-setup_learner()"> </a>
+</h4>
+<p>In this function, we implement a nested <code>try-catch</code> block, where in the outer block, we try to set our model and its dataloaders to <code>cpu</code> instead of <code>cuda</code>, since we'll only be using it for inference.</p>
+<p>The inner <code>try-catch</code> is simply to handle cases of working in a Windows system.</p>
+<h4 id="async-def-startup_event()">
+<a class="anchor" href="#async-def-startup_event()" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>async def startup_event()</code><a class="anchor-link" href="#async-def-startup_event()"> </a>
+</h4>
+<p>As the decoration mentions, this function will be run everytime your app starts up. So what this function does is, it asynchronously sets up your learner and makes it a global variable so that other functions can refer to it now. For more information on <code>asyncio</code>, feel free to check out its <a href="https://docs.python.org/3/library/asyncio.html">docs</a>.</p>
 
 </div>
 </div>
