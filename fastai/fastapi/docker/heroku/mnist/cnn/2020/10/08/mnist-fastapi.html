@@ -290,7 +290,7 @@ pip install fastapi[all]</code></pre>
 <p></p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-    <strong>Note: </strong>Depending on your system, this <code>path</code> object will be of either <code>class &amp;#8217;pathlib.PosixPath&amp;#8217;</code> or <code>class &amp;#8217;pathlib.WindowsPath&amp;#8217;</code>. This is a built-in feature of Python, which I would say is one of the most useful features I’ve come across while learning fastai and would highly recommend you to check out the <strong><code>pathlib</code></strong> library. 
+    <strong>Note: </strong>Depending on your system, this <code>path</code> object will be of either <code>class pathlib.PosixPath</code> or <code>class pathlib.WindowsPath</code>. This is a built-in feature of Python, which I would say is one of the most useful features I’ve come across while learning fastai and would highly recommend you to check out the <strong><code>pathlib</code></strong> library. 
 </div>
 
 </div>
@@ -711,7 +711,7 @@ Now that we have our <code>DataBlock</code> ready, to get our <code>DataLoaders<
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>IMAGE</p>
+<p>IMAGE to be added</p>
 
 </div>
 </div>
@@ -756,7 +756,14 @@ Fastai makes transfer learning with well-known models like Resnets, super easy w
     <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>To have a look at how the model is defined, try running <code>learn.model</code> in a code cell.
 </div>
-Now if you're familiar with Backpropagation and Gradient Descent, you might know what a <strong>Learning Rate</strong> is. It is basically a <strong><em>hyper-parameter</em></strong> that lets you decide how fast your model will learn. But you need to be careful deciding its value, as a value too high or too low, will lead to your model failing to learn properly.
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now if you're familiar with Backpropagation and Gradient Descent, you might know what a <strong>Learning Rate</strong> is. It is basically a <strong><em>hyper-parameter</em></strong> that lets you decide how fast your model will learn. But you need to be careful deciding its value, as a value too high or too low, will lead to your model failing to learn properly.</p>
 <p>To help you decide a good learning rate, the <code>Learner</code> object comes with this function, <code>Learner.lr_find()</code> which basically runs the training process, which inclues Backpropagation, Gradient Descent, etc, but with the learning rate increasing as it trains. This Learning Rate finder method was introduced by Leslie Smith, in her paper, <a href="https://arxiv.org/pdf/1506.01186.pdf">Cyclical Learning Rates for Training Neural Networks</a>.</p>
 <p>So let's go ahead and find a good learning rate to train our model!</p>
 
