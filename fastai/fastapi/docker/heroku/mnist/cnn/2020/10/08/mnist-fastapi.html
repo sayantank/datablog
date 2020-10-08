@@ -80,7 +80,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      6 min read
     
 </span></p>
 
@@ -136,6 +136,13 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Python-packages">Python packages </a></li>
 <li class="toc-entry toc-h2"><a href="#Docker-and-Heroku">Docker and Heroku </a></li>
 <li class="toc-entry toc-h2"><a href="#Development-environment">Development environment </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Preparing-our-Model">Preparing our Model </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Importing-libraries">Importing libraries </a></li>
+<li class="toc-entry toc-h2"><a href="#Getting-our-data">Getting our data </a></li>
+<li class="toc-entry toc-h2"><a href="#Creating-our-DataBlock">Creating our DataBlock </a></li>
 </ul>
 </li>
 </ul><!--
@@ -198,13 +205,354 @@ pip install fastapi[all]</code></pre>
 <h2 id="Development-environment">
 <a class="anchor" href="#Development-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development environment<a class="anchor-link" href="#Development-environment"> </a>
 </h2>
-<p>If you've followed the fastai course, you would know that the best way to write fastai code is in a IPython notebook environment, as fastai provides many additional features which help your training process much easier and insightful. Hence I would recommend everyone to either install <strong>Jupyterlab</strong> on their systems, or check out <a href="https://colab.research.google.com/">Google Colab</a>, which provides you with a Notebook environment in your browser, along with <strong>GPU support!!</strong>.</p>
+<p>If you've followed the fastai course, you would know that the best way to write fastai code is in a IPython notebook environment, as fastai provides many additional features which help your training process much easier and insightful. Hence I would recommend everyone to either install <a href="https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html">Jupyterlab</a> on their systems, or check out <a href="https://colab.research.google.com/">Google Colab</a>, which provides you with a Notebook environment in your browser, along with <strong>free GPU support!!</strong>.</p>
 <p>For the rest of the tutorial, excluding the fastai code, I would recommend any text editor of your choice, but <strong>VSCode</strong> would be preferred as it provides with many features like type-checking for FastAPI.
 </p>
 <div class="flash flash-success">
     <svg class="octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
-    <strong>Tip: </strong>If your system doesn’t have GPU support, I highly recommend using Google Colab as it will make training your model much faster!
+    <strong>Tip: </strong>If your system doesn’t have GPU support, I highly recommend using <strong>Google Colab</strong> as it will make training your model much faster!
 </div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Preparing-our-Model">
+<a class="anchor" href="#Preparing-our-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preparing our Model<a class="anchor-link" href="#Preparing-our-Model"> </a>
+</h1>
+<h2 id="Importing-libraries">
+<a class="anchor" href="#Importing-libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Importing libraries<a class="anchor-link" href="#Importing-libraries"> </a>
+</h2>
+<p>Believe it or not, but we only need a <strong>single</strong> import statement thing to train our entire model.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now some of you might say it is a <em>bad practice</em> to <code>import *</code> in a Python project, but that is the beauty of fastai, which keeps in mind all the issues that would come in doing so, and is written in such a way that it is <strong><em>recommended</em></strong> to import it like this!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Getting-our-data">
+<a class="anchor" href="#Getting-our-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting our data<a class="anchor-link" href="#Getting-our-data"> </a>
+</h2>
+<p>To make things easy, I chose on purpose to use the <strong><a href="http://yann.lecun.com/exdb/mnist/">MNIST</a></strong> dataset, which is provided by fastai out-of-the-box. We just have to download it, and untar the downloaded file. This can be easily done with the following code.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">untar_data</span><span class="p">(</span><span class="n">URLs</span><span class="o">.</span><span class="n">MNIST</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>Depending on your system, this <code>path</code> object will be of either <code>class &amp;#8217;pathlib.PosixPath&amp;#8217;</code> or <code>class &amp;#8217;pathlib.WindowsPath&amp;#8217;</code>. This is a built-in feature of Python, which I would say is one of the most useful features I’ve come across while learning fastai and would highly recommend you to check out the <strong><code>pathlib</code></strong> library. 
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before we start creating our datasets and dataloaders, we should always check how our data is organized to get an idea of how we're supposed to label and divide our data.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#2) [Path('testing'),Path('training')]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s1">'training'</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#10) [Path('training/0'),Path('training/1'),Path('training/2'),Path('training/3'),Path('training/4'),Path('training/5'),Path('training/6'),Path('training/7'),Path('training/8'),Path('training/9')]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s1">'testing'</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#10) [Path('testing/0'),Path('testing/1'),Path('testing/2'),Path('testing/3'),Path('testing/4'),Path('testing/5'),Path('testing/6'),Path('testing/7'),Path('testing/8'),Path('testing/9')]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s1">'training/0'</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#5923) [Path('training/0/1.png'),Path('training/0/1000.png'),Path('training/0/10005.png'),Path('training/0/10010.png'),Path('training/0/10022.png'),Path('training/0/10025.png'),Path('training/0/10026.png'),Path('training/0/10045.png'),Path('training/0/10069.png'),Path('training/0/10071.png')...]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we can see from the above blocks of code, our data is first divided into <code>training</code> and <code>testing</code> directories, which then includes a directory for each digit, containing images of that particular digit.</p>
+<p>Hence, we see that the labels of the images are their <strong>parent directory</strong> names. Later in this section, we'll see how easy it is to label your images using fastai!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Creating-our-DataBlock">
+<a class="anchor" href="#Creating-our-DataBlock" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating our DataBlock<a class="anchor-link" href="#Creating-our-DataBlock"> </a>
+</h2>
+<p>Now that we had a look at our data, and know how to go about labelling them. We now have to create, what we call <code>Dataset</code> and <code>Dataloader</code> in PyTorch, which are the two main classes for representing and accessing training or validation data.</p>
+<ul>
+<li>
+<code>Dataset</code>: A collection that returns a tuple of your independent and dependent variable for a single item.</li>
+<li>
+<code>DataLoader</code>: An iterator that provides a stream of mini-batches, where each mini-batch is a tuple of a batch of independent variables and a batch of dependent variables.</li>
+</ul>
+<p>Since a <code>DataLoader</code> builds on top of a <code>Dataset</code> and adds additional functionality to it (collating multiple items into a mini-batch), it’s often easiest to start by creating and testing <code>Datasets</code>, and then look at <code>DataLoaders</code> after that’s working.</p>
+<p>For example,</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">26</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">dset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dset</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(0, 'a')
+(1, 'b')
+(2, 'c')
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hence, the <code>dset</code> object in the code above, is a valid <code>Dataset</code> in PyTorch as we can index it, and it returns a tuple of the independent and dependent variable, which in this case is integers from <strong>0 to 26</strong> and letters <strong>a to z</strong> respectively.</p>
+<p>Now if you wish to create a <code>DataLoader</code> for this <code>Dataset</code>, you can use the following function provided by PyTorch:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dloader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                                      <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dloader</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[tensor([21, 25, 24, 23], dtype=torch.int32), ('v', 'z', 'y', 'x')]
+[tensor([ 6, 12, 20,  5], dtype=torch.int32), ('g', 'm', 'u', 'f')]
+[tensor([ 4, 22,  8, 15], dtype=torch.int32), ('e', 'w', 'i', 'p')]
+[tensor([18, 11, 13,  7], dtype=torch.int32), ('s', 'l', 'n', 'h')]
+[tensor([10, 19,  3,  1], dtype=torch.int32), ('k', 't', 'd', 'b')]
+[tensor([ 2,  0, 16, 17], dtype=torch.int32), ('c', 'a', 'q', 'r')]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The parameters of the above function are pretty self-explanatory except maybe <code>drop_last</code>, which allows you to drop the last batch of data if it is not of the given <code>batch_size</code> as in some cases it is important to have all your batches of similar sizes.</p>
 
 </div>
 </div>
