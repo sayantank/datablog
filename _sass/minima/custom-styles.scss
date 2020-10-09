@@ -10,6 +10,10 @@
 // If you want to turn off dark background for syntax highlighting, comment or delete the below line.
 @import "minima/fastpages-dracula-highlight"; 
 
+code {
+    font-size: 97%;
+}
+
 .post-content p, .post-content li {
     font-size: 97%;
     color: #252525;
