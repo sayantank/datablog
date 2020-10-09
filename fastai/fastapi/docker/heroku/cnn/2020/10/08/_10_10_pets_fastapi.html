@@ -80,7 +80,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      36 min read
+      37 min read
     
 </span></p>
 
@@ -219,6 +219,7 @@ window.onload = wrap_img;
 <li>Basic HTML and Javascript knowledge</li>
 </ul>
 <p>If you're unfamiliar with Deep Learning, I highly recommend you to take the <a href="https://course.fast.ai">fastai course</a> and I hope this tutorial gets you excited enough about Deep Learning with fastai!</p>
+<p>All the code for this project is available in this <a href="https://github.com/sayantank/pets-fastapi">Github repo</a>!</p>
 
 </div>
 </div>
@@ -1128,9 +1129,9 @@ $ pip install fastapi[all]</code></pre>
     <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="c1"># For working on Windows systems</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s1">'C:</span><span class="se">\\</span><span class="s1">Users</span><span class="se">\\</span><span class="s1">sayank</span><span class="se">\\</span><span class="s1">workspace</span><span class="se">\\</span><span class="s1">mnist-fastapi</span><span class="se">\\</span><span class="s1">'</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s1">'C:</span><span class="se">\\</span><span class="s1">Users</span><span class="se">\\</span><span class="s1">sayank</span><span class="se">\\</span><span class="s1">workspace</span><span class="se">\\</span><span class="s1">pets-fastapi</span><span class="se">\\</span><span class="s1">'</span><span class="p">)</span>
 
-<span class="n">model_name</span> <span class="o">=</span> <span class="s1">'mnist_resnet18.pkl'</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="s1">'pets_resnet18.pkl'</span>
 
 <span class="c1"># Configuring CORS</span>
 <span class="n">origins</span> <span class="o">=</span> <span class="p">[</span>
@@ -1183,11 +1184,11 @@ $ pip install fastapi[all]</code></pre>
     <span class="o">&lt;</span><span class="n">meta</span> <span class="n">charset</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="o">=</span><span class="s2">"viewport"</span> <span class="n">content</span><span class="o">=</span><span class="s2">"width=device-width, initial-scale=1.0"</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="o">=</span><span class="s2">"../static/styles.css"</span> <span class="n">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">MNIST</span> <span class="n">FastAPI</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">PETS</span> <span class="n">FastAPI</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Upload</span> <span class="n">an</span> <span class="n">image</span> <span class="n">of</span> <span class="n">a</span> <span class="n">pet</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">form</span> <span class="nb">id</span><span class="o">=</span><span class="s1">'mnist-form'</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">form</span> <span class="nb">id</span><span class="o">=</span><span class="s1">'pets-form'</span><span class="o">&gt;</span>
         <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"file"</span> <span class="nb">id</span><span class="o">=</span><span class="s2">"file-input"</span> <span class="o">/&gt;</span>
         <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"submit"</span><span class="o">/&gt;</span>
     <span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
@@ -1422,10 +1423,10 @@ $ pip install fastapi[all]</code></pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">const</span> <span class="n">mnistForm</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">getElementById</span><span class="p">(</span><span class="s2">"mnist-form"</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">const</span> <span class="n">petsForm</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">getElementById</span><span class="p">(</span><span class="s2">"pets-form"</span><span class="p">)</span>
 
 <span class="o">//</span> <span class="n">This</span> <span class="n">eventListener</span> <span class="ow">is</span> <span class="n">called</span> <span class="n">on</span> <span class="n">submitting</span> <span class="n">the</span> <span class="n">form</span>
-<span class="n">mnistForm</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s1">'submit'</span><span class="p">,</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="n">petsForm</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s1">'submit'</span><span class="p">,</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="o">//</span> <span class="n">Prevents</span> <span class="n">the</span> <span class="n">page</span> <span class="n">to</span> <span class="n">refresh</span> <span class="n">on</span> <span class="n">submitting</span>
     <span class="n">e</span><span class="o">.</span><span class="n">preventDefault</span><span class="p">()</span>
     
@@ -1664,12 +1665,12 @@ docker run -p 8888:8000 -d pets-fastapi</code></pre>
 <p><strong>Step 4</strong></p>
 <p>Now we build our Docker image for Heroku to use, and push it to Container Registry.</p>
 
-<pre><code>$ heroku container:push -a mnist-fastapi web</code></pre>
+<pre><code>$ heroku container:push -a YOUR_APP_NAME web</code></pre>
 <p>The <code>web</code> here specifies a <code>process-type</code>, which here, means that it is a web app. This step is the one that's gonna take the most time, around 4-5 minutes.</p>
 <p><strong>Step 5</strong></p>
 <p>Our app has been built and pushed to the Container Registry. All that's left is to release it, as it's suggested by the Heroku CLI as well.</p>
 
-<pre><code>$ heroku container:release -a mnist-fastapi web</code></pre>
+<pre><code>$ heroku container:release -a YOUR_APP_NAME web</code></pre>
 <p>There we have it, our app is successfully deployed to the Internet. You can go check it out at <strong>YOUR_APP_NAME.herokuapp.com</strong>.
 </p>
 <div class="flash">
