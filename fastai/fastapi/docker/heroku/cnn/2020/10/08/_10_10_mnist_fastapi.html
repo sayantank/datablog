@@ -154,13 +154,7 @@ window.onload = wrap_img;
 </li>
 <li class="toc-entry toc-h2"><a href="#Loading-our-model">Loading our model </a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#main.py">main.py </a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#def-load_posix_learner(path)">def load_posix_learner(path) </a></li>
-<li class="toc-entry toc-h4"><a href="#def-setup_learner()">def setup_learner() </a></li>
-<li class="toc-entry toc-h4"><a href="#async-def-startup_event()">async def startup_event() </a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h3"><a href="#main.py">main.py </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Defining-our-endpoint">Defining our endpoint </a>
@@ -1318,18 +1312,12 @@ $ pip install fastapi[all]</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I'll explain the three functions defined above separately.</p>
-<h4 id="def-load_posix_learner(path)">
-<a class="anchor" href="#def-load_posix_learner(path)" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>def load_posix_learner(path)</code><a class="anchor-link" href="#def-load_posix_learner(path)"> </a>
-</h4>
+<p><strong><code>def load_posix_learner(path)</code></strong></p>
 <p>This function is necessary <strong>only</strong> if you're working on a Windows system because the fastai function, <code>load_learner</code> uses takes input a <code>PosixPath</code> which is not functional in Windows system and hence this is a workaround I found in the amazing fastai forums!</p>
-<h4 id="def-setup_learner()">
-<a class="anchor" href="#def-setup_learner()" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>def setup_learner()</code><a class="anchor-link" href="#def-setup_learner()"> </a>
-</h4>
+<p><strong><code>def setup_learner()</code></strong></p>
 <p>In this function, we implement a nested <code>try-catch</code> block, where in the outer block, we try to set our model and its dataloaders to <code>cpu</code> instead of <code>cuda</code>, since we'll only be using it for inference.</p>
 <p>The inner <code>try-catch</code> is simply to handle cases of working in a Windows system.</p>
-<h4 id="async-def-startup_event()">
-<a class="anchor" href="#async-def-startup_event()" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>async def startup_event()</code><a class="anchor-link" href="#async-def-startup_event()"> </a>
-</h4>
+<p><strong><code>async def startup_event()</code></strong></p>
 <p>As the decoration mentions, this function will be run everytime your app starts up. So what this function does is, it asynchronously sets up your learner and makes it a global variable so that other functions can refer to it now. For more information on <code>asyncio</code>, feel free to check out its <a href="https://docs.python.org/3/library/asyncio.html">docs</a>.</p>
 <h2 id="Defining-our-endpoint">
 <a class="anchor" href="#Defining-our-endpoint" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defining our endpoint<a class="anchor-link" href="#Defining-our-endpoint"> </a>
