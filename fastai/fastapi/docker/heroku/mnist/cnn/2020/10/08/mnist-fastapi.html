@@ -80,7 +80,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      24 min read
+      26 min read
     
 </span></p>
 
@@ -176,6 +176,11 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#static/client.js">static/client.js </a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Deploying-our-app">Deploying our app </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#What-is-Docker?">What is Docker? </a></li>
 </ul>
 </li>
 </ul><!--
@@ -654,8 +659,16 @@ pip install fastapi[all]</code></pre>
     <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>If you want to know more about a certain function or object, you can run the code <code>doc(DataBlock)</code> for example, to get the documentation on your notebook environment. To have a look at the source code, you can run <code>DataBlock??</code> in a cell.
 </div>
-Now that we have our <code>DataBlock</code> ready, to get our <code>DataLoaders</code>, we simply run the following code:</li>
+</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have our <code>DataBlock</code> ready, to get our <code>DataLoaders</code>, we simply run the following code:</p>
 
 </div>
 </div>
@@ -870,11 +883,11 @@ Now that we have our <code>DataBlock</code> ready, to get our <code>DataLoaders<
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As we see here, a graph of <strong>Loss</strong> against <strong>Learning Rate</strong> is plotted. Usually it is suggested to use a learning rate where the curve is <strong>steepest</strong> since that's where the model seems to be learning the fastest. One would say why not use the learning rate where loss is <strong>minimum</strong>, but if you look at the curve, the curve becomes increasing right after its minimum point, and hence the once you start training, the model will start getting worse within a few epochs.</p>
 <p>Some of you might not be familiar with the term <strong>Loss</strong> here. Loss is a value to evaluate how well your model is training. It is usually a function that takes in <strong>true values</strong> of your data, and the <strong>predicted values</strong> by your model as input and then outputs a single value representing how close your model is to predicting te true values. Lesser the loss, better your model is doing.</p>
-<p>Fastai has the ability to figure out which loss function is right for your problem, which you can also specify with the <code>loss_func</code> parameter to the <code>cnn_learner</code> explicitly. Since the problem we're dealing with is a Multiclass Classification, a Binary CrossEntropy loss would be right for us.
+<p>Fastai has the ability to figure out which loss function is right for your problem, which you can also specify with the <code>loss_func</code> parameter to the <code>cnn_learner</code> explicitly. Since the problem we're dealing with is a Multiclass Classification, a Cross Entropy loss would be right for us.
 </p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-    <strong>Note: </strong>Going into how Binary Cross Entropy works is out of scope for this tutorial, but it basically looks at predicted probabilities for each class of output and checks how far they are from the true values.
+    <strong>Note: </strong>Going into how Cross Entropy works is out of scope for this tutorial, but it basically looks at predicted probabilities for each class of output and checks how far they are from the true values.
 </div>
 
 </div>
@@ -1432,14 +1445,13 @@ Now that we have our <code>DataBlock</code> ready, to get our <code>DataLoaders<
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
-      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
-        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">const</span> <span class="n">mnistForm</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">getElementById</span><span class="p">(</span><span class="s2">"mnist-form"</span><span class="p">)</span>
+
+<span class="o">//</span> <span class="n">This</span> <span class="n">eventListener</span> <span class="ow">is</span> <span class="n">called</span> <span class="n">on</span> <span class="n">submitting</span> <span class="n">the</span> <span class="n">form</span>
 <span class="n">mnistForm</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s1">'submit'</span><span class="p">,</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="o">//</span> <span class="n">Prevents</span> <span class="n">the</span> <span class="n">page</span> <span class="n">to</span> <span class="n">refresh</span> <span class="n">on</span> <span class="n">submitting</span>
     <span class="n">e</span><span class="o">.</span><span class="n">preventDefault</span><span class="p">()</span>
@@ -1460,7 +1472,7 @@ Now that we have our <code>DataBlock</code> ready, to get our <code>DataLoaders<
         <span class="n">alert</span><span class="p">(</span><span class="s2">"Invalid file"</span><span class="p">)</span>
     <span class="p">}</span>
     
-    <span class="o">//</span> <span class="n">This</span> <span class="n">eventListener</span> <span class="ow">is</span> <span class="n">called</span> <span class="n">when</span> <span class="n">the</span> <span class="n">read</span> <span class="n">operation</span> <span class="ow">is</span> <span class="n">done</span>
+    <span class="o">//</span> <span class="n">This</span> <span class="n">eventListener</span> <span class="ow">is</span> <span class="n">called</span> <span class="n">when</span> <span class="n">the</span> <span class="n">read</span> <span class="n">operation</span> <span class="n">completes</span>
     <span class="n">reader</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s2">"load"</span><span class="p">,</span> <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">fetch</span><span class="p">(</span><span class="err">`$</span><span class="p">{</span><span class="n">loc</span><span class="o">.</span><span class="n">protocol</span><span class="p">}</span><span class="o">//</span><span class="err">$</span><span class="p">{</span><span class="n">loc</span><span class="o">.</span><span class="n">hostname</span><span class="p">}:</span><span class="err">$</span><span class="p">{</span><span class="n">loc</span><span class="o">.</span><span class="n">port</span><span class="p">}</span><span class="o">/</span><span class="n">upload</span><span class="err">`</span><span class="p">,</span> <span class="p">{</span>
             <span class="n">method</span><span class="p">:</span> <span class="s2">"post"</span><span class="p">,</span>
@@ -1480,10 +1492,48 @@ Now that we have our <code>DataBlock</code> ready, to get our <code>DataLoaders<
 </div>
 </div>
 
-    </details>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you're familiar with Javascript, most of this should look pretty basic. The interesting part is how we use <code>FileReader</code>, which has a function called <code>readAsDataURL</code>, which converts a given <code>File</code> object to its base64 encoded string. But we only do this if the file is a <code>.jpg</code> or a <code>.png</code>, orelse we alert the user.</p>
+<p>Once the FileReader successfully reads the file, the <code>load</code> event is triggered, for which we add an EventListener. In here, we use the usual <code>fetch</code> function to send a <code>POST</code> request to the same host, and same port but <code>/upload</code> path. The base64 encoded string can be accessed using <code>reader.result</code>, which we pass in to the body with key, <code>img_base64</code>, which has to be the same as how we defined in out <strong>Pydantic</strong> model earlier.</p>
+<p>After we get a reponse back from our endpoint, we convert it to a JSON and get the value for <code>pred</code>, which we then set it in the <code>&lt;h2&gt;</code> we put in our <code>index.html</code>.</p>
+<p>With that, we have completed our whole Deep Learning application with a <strong>state-of-the-art</strong> model in the backend. This was a very simple application, and I would encourage you to think of fun ideas to implement and learn more about fastai and its amazing features!</p>
+<p>Now to share this application with your friends and family, you have to deploy it on the Internet, which brings us to the last part of this tutorial!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Deploying-our-app">
+<a class="anchor" href="#Deploying-our-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying our app<a class="anchor-link" href="#Deploying-our-app"> </a>
+</h1>
+<p>We'll be using Docker and Heroku to deploy our app. If you're familiar with Docker, feel free to skip to the part where we define our <code>.Dockerfile</code>!</p>
+<h2 id="What-is-Docker?">
+<a class="anchor" href="#What-is-Docker?" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Docker?<a class="anchor-link" href="#What-is-Docker?"> </a>
+</h2>
+<p>As mentioned in their <a href="https://docs.docker.com/get-started/">documentation</a>,</p>
+<blockquote>
+<p>Docker is a platform for developers and sysadmins to build, run, and share applications with containers. The use of containers to deploy applications is called containerization. Containers are not new, but their use for easily deploying applications is.</p>
+<p>Fundamentally, a container is nothing but a running process, with some added encapsulation features applied to it in order to keep it isolated from the host and from other containers. One of the most important aspects of container isolation is that each container interacts with its own private filesystem; this filesystem is provided by a Docker image. An image includes everything needed to run an application - the code or binary, runtimes, dependencies, and any other filesystem objects required.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The two most important terms in the mentioned text above are, <strong>Images</strong> and <strong>Containers</strong>. These are the fundamental concepts as to how Docker works. Images can basically be considered as <strong><em>snapshots</em></strong> of a virtual machine. We define everything that represents the state of a virtual machine, such as which software to be installed, what is your working directory, etc. If this is a working state for your application, you know that this image will work forever since they are <strong>immutable</strong>.</p>
+
+</div>
+</div>
+</div>
 </div>
 
 
