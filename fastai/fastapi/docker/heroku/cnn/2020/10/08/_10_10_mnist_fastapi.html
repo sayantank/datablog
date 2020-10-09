@@ -17,7 +17,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-10-08T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"A simple and detailed tutorial on how to go about creating your own state-of-the-art image classifier and deploy it using fastai, FastAPI, Docker and Heroku","url":"https://sayantank.github.io/datablog/fastai/fastapi/docker/heroku/cnn/2020/10/08/_10_10_mnist_fastapi.html","@type":"BlogPosting","headline":"End to End Deep Learning Project with fastai, FastAPI, Docker and Heroku","dateModified":"2020-10-08T00:00:00-05:00","datePublished":"2020-10-08T00:00:00-05:00","author":{"@type":"Person","name":"Sayantan Karmakar"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://sayantank.github.io/datablog/fastai/fastapi/docker/heroku/cnn/2020/10/08/_10_10_mnist_fastapi.html"},"@context":"https://schema.org"}</script>
+{"url":"https://sayantank.github.io/datablog/fastai/fastapi/docker/heroku/cnn/2020/10/08/_10_10_mnist_fastapi.html","@type":"BlogPosting","headline":"End to End Deep Learning Project with fastai, FastAPI, Docker and Heroku","dateModified":"2020-10-08T00:00:00-05:00","datePublished":"2020-10-08T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://sayantank.github.io/datablog/fastai/fastapi/docker/heroku/cnn/2020/10/08/_10_10_mnist_fastapi.html"},"author":{"@type":"Person","name":"Sayantan Karmakar"},"description":"A simple and detailed tutorial on how to go about creating your own state-of-the-art image classifier and deploy it using fastai, FastAPI, Docker and Heroku","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/datablog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sayantank.github.io/datablog/feed.xml" title="datablog" /><link rel="shortcut icon" type="image/x-icon" href="/datablog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -181,29 +181,11 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Creating-our-Docker-Image">Creating our Docker Image </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#requirements.txt">requirements.txt </a></li>
-<li class="toc-entry toc-h3"><a href="#Dockerfile">Dockerfile </a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#FROM-fastdotai/fastai:latest">FROM fastdotai/fastai:latest </a></li>
-<li class="toc-entry toc-h4"><a href="#COPY-requirements.txt-.">COPY requirements.txt . </a></li>
-<li class="toc-entry toc-h4"><a href="#RUN-pip-install---upgrade--r-requirements.txt">RUN pip install --upgrade -r requirements.txt </a></li>
-<li class="toc-entry toc-h4"><a href="#COPY-.-.">COPY . . </a></li>
-<li class="toc-entry toc-h4"><a href="#RUN-adduser-myuser">RUN adduser myuser </a></li>
-<li class="toc-entry toc-h4"><a href="#USER-myuser">USER myuser </a></li>
-<li class="toc-entry toc-h4"><a href="#CMD-uvicorn-main:app---host-0.0.0.0---port-$PORT">CMD uvicorn main:app --host 0.0.0.0 --port $PORT </a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h3"><a href="#Dockerfile">Dockerfile </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Testing-locally">Testing locally </a></li>
-<li class="toc-entry toc-h2"><a href="#Deploying-to-Heroku">Deploying to Heroku </a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#Step-1">Step 1 </a></li>
-<li class="toc-entry toc-h3"><a href="#Step-2">Step 2 </a></li>
-<li class="toc-entry toc-h3"><a href="#Step-3">Step 3 </a></li>
-<li class="toc-entry toc-h3"><a href="#Step-4">Step 4 </a></li>
-<li class="toc-entry toc-h3"><a href="#Step-5">Step 5 </a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h2"><a href="#Deploying-to-Heroku">Deploying to Heroku </a></li>
 <li class="toc-entry toc-h2"><a href="#Keeping-your-app-alive">Keeping your app alive </a></li>
 </ul>
 </li>
@@ -259,11 +241,11 @@ window.onload = wrap_img;
 <p>To get started, we need to install <a href="https://pytorch.org/get-started/locally/">PyTorch</a>, <a href="https://docs.fast.ai">fastai</a> and <a href="https://fastapi.tiangolo.com/">FastAPI</a> on our system. Ideally, I would recommend everyone to use Anaconda/Miniconda to manage your Python packages and environments.</p>
 <p>Assuming you have Anaconda/Miniconda installed, the following lines of code would install the required packages for this tutorial -</p>
 
-<pre><code>conda install pytorch torchvision cudatoolkit=10.2 -c pytorch
+<pre><code>$ conda install pytorch torchvision cudatoolkit=10.2 -c pytorch
 
-pip install --upgrade fastai
+$ pip install --upgrade fastai
 
-pip install fastapi[all]</code></pre>
+$ pip install fastapi[all]</code></pre>
 <h2 id="Docker-and-Heroku">
 <a class="anchor" href="#Docker-and-Heroku" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker and Heroku<a class="anchor-link" href="#Docker-and-Heroku"> </a>
 </h2>
@@ -276,7 +258,7 @@ pip install fastapi[all]</code></pre>
 <p>For the rest of the tutorial, excluding the fastai code, I would recommend any text editor of your choice, but <strong>VSCode</strong> would be preferred as it provides with many features like type-checking for FastAPI.
 </p>
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <svg class="octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>If your system doesn’t have GPU support, I highly recommend using <strong>Google Colab</strong> as it will make training your model much faster!
 </div>
 
@@ -370,7 +352,7 @@ pip install fastapi[all]</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>Depending on your system, this <code>path</code> object will be of either <code>class pathlib.PosixPath</code> or <code>class pathlib.WindowsPath</code>. This is a built-in feature of Python, which I would say is one of the most useful features I’ve come across while learning fastai and would highly recommend you to check out the <strong><code>pathlib</code></strong> library. 
 </div>
 
@@ -619,7 +601,7 @@ pip install fastapi[all]</code></pre>
 <li>
 <strong><code>get_y</code></strong>: This is function, which is mapped to all the items in the list mentioned above, to extract the dependent variable from it, which we call as <strong>y</strong> usually. <code>RegexLabeller</code> is a function that takes in a regex expression and applies it on the file name to get the label.
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>Regular expressions (Regex) is a sequence of characters that define a search pattern.
 </div>
 </li>
@@ -637,7 +619,7 @@ pip install fastapi[all]</code></pre>
 <li>
 <strong><code>batch_tfms</code></strong>: This is meant for transforms to perform <strong>Data Augmentation</strong>. These transformations are applied on the batch as a whole, on the GPU, so that the process is fast. Whereas <code>item_tfms</code> is applied on the CPU usually, and to each and every item in the data.
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>I would love to go on about Data Augmentation and Regex in this tutorial, but since we have so much to cover, I believe it is out of scope for this tutorial but I would again highly recommend reading about it or follow the fastai course.
 </div>
 </li>
@@ -727,7 +709,7 @@ pip install fastapi[all]</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <svg class="octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>If you want to know more about a certain function or object, you can run the code <code>doc(DataBlock)</code> for example, to get the documentation on your notebook environment. To have a look at the source code, you can run <code>DataBlock??</code> in a cell.
 </div>
 
@@ -756,7 +738,7 @@ pip install fastapi[all]</code></pre>
 <p>In this tutorial, we'll be using a CNN called <strong><a href="https://arxiv.org/abs/1512.03385">Resnets</a></strong>, which comes pretrained on the <a href="http://www.image-net.org/">ImageNet dataset</a>. By <strong>pretrained</strong>, what I mean is that, this model was trained on the mentioned ImageNet dataset, and then the weights of that model were saved, and now used by Deep Learning lovers all around the world!
 </p>
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>This method of using a pretrained model is called <strong>Transfer Learning</strong>, and I would recommend reading about it once you have a good understanding of CNNs.
 </div>
 
@@ -794,7 +776,7 @@ pip install fastapi[all]</code></pre>
 <p>Guess what? You have a state-of-the-art model ready to train on your data, in just a single line of code!
 </p>
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>To have a look at how the model is defined, try running <code>learn.model</code> in a code cell.
 </div>
 
@@ -871,7 +853,7 @@ pip install fastapi[all]</code></pre>
 <p>Fastai has the ability to figure out which loss function is right for your problem, which you can also specify with the <code>loss_func</code> parameter to the <code>cnn_learner</code> explicitly. Since the problem we're dealing with is a Multiclass Classification, a Cross Entropy loss would be right for us.
 </p>
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>Going into how Cross Entropy works is out of scope for this tutorial, but it basically looks at predicted probabilities for each class of output and checks how far they are from the true values.
 </div>
 
@@ -1073,7 +1055,7 @@ pip install fastapi[all]</code></pre>
 <p>Before we get started with out API, I would like to tell the readers that this is a very simple application using FastAPI, and there are <strong>many more</strong> cool features to it which you can check out in their <a href="https://fastapi.tiangolo.com/">docs</a>
 </p>
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>All code following this point, should be done in a text editor, and not a notebook.
 </div>
 
@@ -1236,8 +1218,8 @@ pip install fastapi[all]</code></pre>
 <p>Similarly, you can write decorators for other HTTP methods such as <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, etc.
 </p>
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
-    <strong>Tip: </strong>To run your app locally now to test if everything works fine, go ahead and run the following command: <code>uvicorn main:app --host 127.0.0.1 --port 8000 --reload</code>
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <strong>Tip: </strong>To run your app locally now to test if everything works fine, go ahead and run the following command in your terminal: <code>$ uvicorn main:app --host 127.0.0.1 --port 8000 --reload</code>
 </div>
 
 </div>
@@ -1249,7 +1231,7 @@ pip install fastapi[all]</code></pre>
 <p>The <code>response_class</code> parameter tells the function that it has to return an HTML file, which in this case is sent using <code>templates.TemplateResponse("index.html", {"request": request})</code>
 </p>
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>It is necessary to pass the <code>request</code> parameter to the function, and then return it with the <code>TemplateResponse</code>.
 </div>
 
@@ -1533,7 +1515,7 @@ pip install fastapi[all]</code></pre>
 <h2 id="Creating-our-Docker-Image">
 <a class="anchor" href="#Creating-our-Docker-Image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating our Docker Image<a class="anchor-link" href="#Creating-our-Docker-Image"> </a>
 </h2>
-<p>To create our Docker Image, we need to write a <strong><code>.Dockerfile</code></strong>. What a Dockerfile consists of is <em>layers</em> of commands/steps. Each command is run one after the other to form our image in the end.</p>
+<p>To create our Docker Image, we need to write a <strong><code>Dockerfile</code></strong>. What a Dockerfile consists of is <em>layers</em> of commands/steps. Each command is run one after the other to form our image in the end.</p>
 <p>We'll see these steps in action very soon, but before we write our Dockerfile, we need to create another file called <code>requirements.txt</code>. It's not necessary to name it this, but it's more of a convention. All we have to do is mention the Python packages required for our whole app to run. For this tutorial, the required packages are:</p>
 <h3 id="requirements.txt">
 <a class="anchor" href="#requirements.txt" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>requirements.txt</code><a class="anchor-link" href="#requirements.txt"> </a>
@@ -1546,7 +1528,7 @@ aiofiles
 aiohttp</code></pre>
 <p></p>
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>Notice how I didn’t mention fastai, as well as many other libraries like numpy, torch, etc. We’ll come to this very soon.
 </div>
 
@@ -1596,25 +1578,17 @@ aiohttp</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>That's pretty much it! You have your Dockerfile ready, which is responsible for creating your Docker Image.</p>
 <p>Let's break down this file into each of its commands!</p>
-<h4 id="FROM-fastdotai/fastai:latest">
-<a class="anchor" href="#FROM-fastdotai/fastai:latest" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>FROM fastdotai/fastai:latest</code><a class="anchor-link" href="#FROM-fastdotai/fastai:latest"> </a>
-</h4>
+<p><strong><code>FROM fastdotai/fastai:latest</code></strong></p>
 <p>You might be familiar with the term Inheritance, often used in Object Oriented Programming. Well, this statement is sort of like inheritance. What this line of code does is that, it tells docker to start off our Docker Image as an image of the official fastai Docker Image. So basically, our image is <strong><em>inheriting</em></strong> fastai's official image which has all its dependencies installed and maintained by fastai itself. That's why we did not have to mention fastai, or libraries like numpy, torch, etc in <code>requirements.txt</code> as they will already be installed in our image. You can check out more images like these at <a href="https://hub.docker.com">Docker Hub</a>.</p>
-<h4 id="COPY-requirements.txt-.">
-<a class="anchor" href="#COPY-requirements.txt-." aria-hidden="true"><span class="octicon octicon-link"></span></a><code>COPY requirements.txt .</code><a class="anchor-link" href="#COPY-requirements.txt-."> </a>
-</h4>
+<p><strong><code>COPY requirements.txt .</code></strong></p>
 <p>What we would like to do next is install the rest of the dependencies that we require. To do so, we wrote the <code>requirements.txt</code> file, which now we have to copy the file from our system, into the Docker Image. Well that's what this line of code does. It simply copies the <code>requirements.txt</code> file to the Docker Image.</p>
-<h4 id="RUN-pip-install---upgrade--r-requirements.txt">
-<a class="anchor" href="#RUN-pip-install---upgrade--r-requirements.txt" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>RUN pip install --upgrade -r requirements.txt</code><a class="anchor-link" href="#RUN-pip-install---upgrade--r-requirements.txt"> </a>
-</h4>
+<p><strong><code>RUN pip install --upgrade -r requirements.txt</code></strong></p>
 <p>Now that we have the <code>requirements.txt</code> in our image, all we need to do in use <code>pip</code> to install those packages. This statement does exactly that. It <strong>runs</strong> the given command. I hope you started to notice how much sense all these commands make now!</p>
-<h4 id="COPY-.-.">
-<a class="anchor" href="#COPY-.-." aria-hidden="true"><span class="octicon octicon-link"></span></a><code>COPY . .</code><a class="anchor-link" href="#COPY-.-."> </a>
-</h4>
+<p><strong><code>COPY . .</code></strong></p>
 <p>What's the use of installing all these dependencies if we don't have any code to use them? Hence, what we do next is <strong><code>COPY</code></strong> everything that is in our local working directory, to our Docker Image's working directory.
 </p>
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>You might be wondering that we could have copied all the files along with <code>requirements.txt</code>. But it is usually considered good practice to do this, where you first setup your image with all the required dependencies, and only then copy your code in there.
 </div>
 
@@ -1624,21 +1598,15 @@ aiohttp</code></pre>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="RUN-adduser-myuser">
-<a class="anchor" href="#RUN-adduser-myuser" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>RUN adduser myuser</code><a class="anchor-link" href="#RUN-adduser-myuser"> </a>
-</h4>
+<p><strong><code>RUN adduser myuser</code></strong></p>
 <p>Generally it's suggested to test-run your application in your Docker image as a non-root user when you wanna deploy to Heroku, since that's what Heroku does as well. So this statement just adds a new user to the Docker Image.</p>
-<h4 id="USER-myuser">
-<a class="anchor" href="#USER-myuser" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>USER myuser</code><a class="anchor-link" href="#USER-myuser"> </a>
-</h4>
+<p><strong><code>USER myuser</code></strong></p>
 <p>This line of code just tells the image to start using the newly-added user.</p>
-<h4 id="CMD-uvicorn-main:app---host-0.0.0.0---port-$PORT">
-<a class="anchor" href="#CMD-uvicorn-main:app---host-0.0.0.0---port-%24PORT" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>CMD uvicorn main:app --host 0.0.0.0 --port $PORT</code><a class="anchor-link" href="#CMD-uvicorn-main:app---host-0.0.0.0---port-%24PORT"> </a>
-</h4>
+<p><strong><code>CMD uvicorn main:app --host 0.0.0.0 --port $PORT</code></strong></p>
 <p>With everything set up in our Docker Image, it's finally time to run the app! We use the <strong><code>CMD</code></strong> command here to run the app, instead of <code>RUN</code> because <code>RUN</code> commands are only run once, while building the image. Whereas <strong><code>CMD</code></strong> commands are run everytime the image is running in a container. We use the host <code>0.0.0.0</code> since this allows the container to communicate with networks apart from itself.
 </p>
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>Try testing your image locally with the steps mentioned below, but with <code>127.0.0.1</code>, and find out if you can run your app on your browser.
 </div>
 
@@ -1671,12 +1639,12 @@ docker run -p 8888:8000 -d pets-fastapi</code></pre>
 <a class="anchor" href="#Deploying-to-Heroku" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying to Heroku<a class="anchor-link" href="#Deploying-to-Heroku"> </a>
 </h2>
 <p>Heroku is a Cloud platform-as-a-service which allows developers to build, run, and operate applications entirely in the cloud. It's a great place for beginners, who're looking for a free option to deploy their small-scale projects.</p>
-<p>Deploying Docker containers with Heroku is super easy! It takes about 4 lines of code, and that's all. You can know more about this process <a href="https://devcenter.heroku.com/categories/deploying-with-docker">here</a>.</p>
+<p>Deploying Docker containers with Heroku is super easy! You can know more about this process <a href="https://devcenter.heroku.com/categories/deploying-with-docker">here</a>.</p>
 <p>There are two main methods of deploying with Docker in Heroku. We'll follow the <strong>Container Registry</strong> method, which allows you to deploy pre-built Docker images to Heroku.</p>
 <p>I'm assuming that you've installed the Heroku CLI, and signed up for it as well. Then we can move on to the 5 simple steps to get your app deployed.
 </p>
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>Make sure you’re in the main directory of your app, where your Dockerfile is also present.
 </div>
 
@@ -1686,42 +1654,32 @@ docker run -p 8888:8000 -d pets-fastapi</code></pre>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-1">
-<a class="anchor" href="#Step-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 1<a class="anchor-link" href="#Step-1"> </a>
-</h3>
+<p><strong>Step 1</strong></p>
 <p>We login to Heroku using Heroku CLI by running the following command in your terminal.</p>
 
 <pre><code>$ heroku login</code></pre>
-<h3 id="Step-2">
-<a class="anchor" href="#Step-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 2<a class="anchor-link" href="#Step-2"> </a>
-</h3>
+<p><strong>Step 2</strong></p>
 <p>We log in to the Container Registry</p>
 
 <pre><code>$ heroku container:login</code></pre>
-<h3 id="Step-3">
-<a class="anchor" href="#Step-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 3<a class="anchor-link" href="#Step-3"> </a>
-</h3>
+<p><strong>Step 3</strong></p>
 <p>Now we create a Heroku app with any name of your choice. Once you do this, you can check your Heroku dashboard to find your app there. But keep in mind, it's still an empty app as we still didn't deploy our container.</p>
 
 <pre><code>$ heroku create -a YOUR_APP_NAME</code></pre>
 <p>The <code>-a</code> tag allows you to name your app.</p>
-<h3 id="Step-4">
-<a class="anchor" href="#Step-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4<a class="anchor-link" href="#Step-4"> </a>
-</h3>
+<p><strong>Step 4</strong></p>
 <p>Now we build our Docker image for Heroku to use, and push it to Container Registry.</p>
 
 <pre><code>$ heroku container:push -a mnist-fastapi web</code></pre>
 <p>The <code>web</code> here specifies a <code>process-type</code>, which here, means that it is a web app. This step is the one that's gonna take the most time, around 4-5 minutes.</p>
-<h3 id="Step-5">
-<a class="anchor" href="#Step-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 5<a class="anchor-link" href="#Step-5"> </a>
-</h3>
+<p><strong>Step 5</strong></p>
 <p>Our app has been built and pushed to the Container Registry. All that's left is to release it, as it's suggested by the Heroku CLI as well.</p>
 
 <pre><code>$ heroku container:release -a mnist-fastapi web</code></pre>
 <p>There we have it, our app is successfully deployed to the Internet. You can go check it out at <strong>YOUR_APP_NAME.herokuapp.com</strong>.
 </p>
 <div class="flash">
-    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>Keep in mind, it takes a while for your app to startup. So be a little patient when trying it out for the first time.
 </div>
 
