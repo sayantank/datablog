@@ -248,7 +248,7 @@ $ pip install fastapi[all]</code></pre>
 <h2 id="Development-environment">
 <a class="anchor" href="#Development-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development environment<a class="anchor-link" href="#Development-environment"> </a>
 </h2>
-<p>If you've followed the fastai course, you would know that the best way to write fastai code is in a IPython notebook environment, as fastai provides many additional features which help your training process much easier and insightful. Hence I would recommend everyone to either install <a href="https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html">Jupyterlab</a> on their systems, or check out <a href="https://colab.research.google.com/">Google Colab</a>, which provides you with a Notebook environment in your browser, along with <strong>free GPU support!!</strong>.</p>
+<p>If you've followed the fastai course, you would know that the best way to write fastai code is in a IPython notebook environment, as fastai provides many additional features which help your training process be much easier and insightful. Hence I would recommend everyone to either install <a href="https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html">Jupyterlab</a> on their systems, or check out <a href="https://colab.research.google.com/">Google Colab</a>, which provides you with a Notebook environment in your browser, along with <strong>free GPU support!!</strong>.</p>
 <p>For the rest of the tutorial, excluding the fastai code, I would recommend any text editor of your choice, but <strong>VSCode</strong> would be preferred as it provides with many features like type-checking for FastAPI.
 </p>
 <div class="flash flash-success">
@@ -587,13 +587,17 @@ $ pip install fastapi[all]</code></pre>
 <p>The parameters required to define the DataBlock object are as follows:</p>
 <ul>
 <li>
-<strong><code>blocks</code></strong>: This represents the type of data we wish to represent, hence for this tutorial, our independent variable is an image, and dependent variable will be an integer, representing a category. Hence our problem in hand is a multi-class Classificiation problem.</li>
+<p><strong><code>blocks</code></strong>: This represents the type of data we wish to represent, hence for this tutorial, our independent variable is an image, and dependent variable will be an integer, representing a category. Hence our problem in hand is a multi-class Classificiation problem.</p>
+</li>
 <li>
-<strong><code>get_items</code></strong>: This is a function which is run when given a path usually, returns the list of items. In this case, <code>get_image_files</code> is a function which if given a path, recursively finds out all the image files in the directory, and returns their paths as a list.</li>
+<p><strong><code>get_items</code></strong>: This is a function which is run when given a path usually, returns the list of items. In this case, <code>get_image_files</code> is a function which if given a path, recursively finds out all the image files in the directory, and returns their paths as a list.</p>
+</li>
 <li>
-<strong><code>splitter</code></strong>: This is a function which when given the list of all items, returns two lists, representing the training set and validation set. In this case, we are <em>randomly splitting</em> the images, keeping 20% for validation set.</li>
+<p><strong><code>splitter</code></strong>: This is a function which when given the list of all items, returns two lists, representing the training set and validation set. In this case, we are <em>randomly splitting</em> the images, keeping 20% for validation set.</p>
+</li>
 <li>
-<strong><code>get_y</code></strong>: This is function, which is mapped to all the items in the list mentioned above, to extract the dependent variable from it, which we call as <strong>y</strong> usually. <code>RegexLabeller</code> is a function that takes in a regex expression and applies it on the file name to get the label.
+<p><strong><code>get_y</code></strong>: This is function, which is mapped to all the items in the list mentioned above, to extract the dependent variable from it, which we call as <strong>y</strong> usually. <code>RegexLabeller</code> is a function that takes in a regex expression and applies it on the file name to get the label.
+</p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>Regular expressions (Regex) is a sequence of characters that define a search pattern.
@@ -609,9 +613,11 @@ $ pip install fastapi[all]</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li>
-<strong><code>item_tfms</code></strong>: In PyTorch, we have functions called <code>Transforms</code>, which when given an image, performs certain operations on it. Here, <code>Resize</code> is a transform, which as the name suggest, resizes the image to shape <code>(128,128)</code>.</li>
+<p><strong><code>item_tfms</code></strong>: In PyTorch, we have functions called <code>Transforms</code>, which when given an image, performs certain operations on it. Here, <code>Resize</code> is a transform, which as the name suggest, resizes the image to shape <code>(128,128)</code>.</p>
+</li>
 <li>
-<strong><code>batch_tfms</code></strong>: This is meant for transforms to perform <strong>Data Augmentation</strong>. These transformations are applied on the batch as a whole, on the GPU, so that the process is fast. Whereas <code>item_tfms</code> is applied on the CPU usually, and to each and every item in the data.
+<p><strong><code>batch_tfms</code></strong>: This is meant for transforms to perform <strong>Data Augmentation</strong>. These transformations are applied on the batch as a whole, on the GPU, so that the process is fast. Whereas <code>item_tfms</code> is applied on the CPU usually, and to each and every item in the data.
+</p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>I would love to go on about Data Augmentation and Regex in this tutorial, but since we have so much to cover, I believe it is out of scope for this tutorial but I would again highly recommend reading about it or follow the fastai course.
