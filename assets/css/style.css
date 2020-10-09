@@ -478,6 +478,8 @@ pre code { font-size: 15px !important; }
 
 p code { font-size: 19px; }
 
+code { font-size: 97%; }
+
 .post-content p, .post-content li { font-size: 97%; color: #252525; }
 
 .post-content code { padding: 0px 1px; }
